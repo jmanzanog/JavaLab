@@ -8,11 +8,11 @@ process.stdin.setEncoding('utf-8');
 let inputString = '';
 let currentLine = 0;
 
-process.stdin.on('data', function(inputStdin) {
+process.stdin.on('data', function (inputStdin) {
     inputString += inputStdin;
 });
 
-process.stdin.on('end', function() {
+process.stdin.on('end', function () {
     inputString = inputString.split('\n');
 
     main();
@@ -39,21 +39,21 @@ async function getRecordsByAgeGroup(ageStart, ageEnd, bpDiff) {
     let rtn = [], curPage = 1
     while (true) {
         let res = await fetch('https://jsonmock.hackerrank.com/api/medical_records?page=' + curPage)
-        let { total_pages, page, data = [] } = res
-        rtn = rtn.concat(data.filter(({ id,userDob, timestamp, vitals }) => {
+        let {total_pages, page, data = []} = res
+        rtn = rtn.concat(data.filter(({id, userDob, timestamp, vitals}) => {
             let birthStr = userDob.split('-').reverse().join('-')
             let age1t = add_years(new Date(birthStr), ageStart), age2t = add_years(new Date(birthStr), ageEnd)
-            if (age1t*1 > timestamp) return false
-        if (age2t*1 < timestamp) return false
-        let { bloodPressureDiastole, bloodPressureSystole } = vitals
-        if (Math.abs(bloodPressureDiastole - bloodPressureSystole) <= bpDiff) return false
-        return true
-    }))
+            if (age1t * 1 > timestamp) return false
+            if (age2t * 1 < timestamp) return false
+            let {bloodPressureDiastole, bloodPressureSystole} = vitals
+            if (Math.abs(bloodPressureDiastole - bloodPressureSystole) <= bpDiff) return false
+            return true
+        }))
 
         curPage = parseInt(page) + 1
         if (curPage > total_pages) break
     }
-    return rtn.map(x=>x.id).sort((a,b)=>a-b)
+    return rtn.map(x => x.id).sort((a, b) => a - b)
 
     function add_years(dt, n) {
         return new Date(dt.setFullYear(dt.getFullYear() + n));
@@ -64,19 +64,20 @@ async function getRecordsByAgeGroup(ageStart, ageEnd, bpDiff) {
         return new Promise((resolve) => {
             const req = http.request(options, (res) => {
                 res.setEncoding('utf8');
-        let data = ''
-        res.on('data', (chunk) => {
-            data += chunk
-        });
-        res.on('end', () => {
-            resolve(JSON.parse(data))
-    });
-    });
-        req.end()
-    })
+                let data = ''
+                res.on('data', (chunk) => {
+                    data += chunk
+                });
+                res.on('end', () => {
+                    resolve(JSON.parse(data))
+                });
+            });
+            req.end()
+        })
 
     }
 }
+
 async function main() {
     const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
 

@@ -1,11 +1,11 @@
 package ReductorArray;
 
 import java.io.*;
-import java.util.*;
-import java.util.stream.*;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.IntStream;
 
+import static java.util.stream.Collectors.toList;
 
 
 class Result {
@@ -65,12 +65,12 @@ public class Solution {
         int aCount = Integer.parseInt(bufferedReader.readLine().trim());
 
         List<Integer> a = IntStream.range(0, aCount).mapToObj(i -> {
-            try {
-                return bufferedReader.readLine().replaceAll("\\s+$", "");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        })
+                    try {
+                        return bufferedReader.readLine().replaceAll("\\s+$", "");
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                })
                 .map(String::trim)
                 .map(Integer::parseInt)
                 .collect(toList());
@@ -78,12 +78,12 @@ public class Solution {
         int bCount = Integer.parseInt(bufferedReader.readLine().trim());
 
         List<Integer> b = IntStream.range(0, bCount).mapToObj(i -> {
-            try {
-                return bufferedReader.readLine().replaceAll("\\s+$", "");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        })
+                    try {
+                        return bufferedReader.readLine().replaceAll("\\s+$", "");
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                })
                 .map(String::trim)
                 .map(Integer::parseInt)
                 .collect(toList());

@@ -1,16 +1,9 @@
 package RestockingTheWarehouse;
 
 import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.regex.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 
@@ -46,12 +39,12 @@ public class Solution {
         int itemCountCount = Integer.parseInt(bufferedReader.readLine().trim());
 
         List<Integer> itemCount = IntStream.range(0, itemCountCount).mapToObj(i -> {
-            try {
-                return bufferedReader.readLine().replaceAll("\\s+$", "");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        })
+                    try {
+                        return bufferedReader.readLine().replaceAll("\\s+$", "");
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                })
                 .map(String::trim)
                 .map(Integer::parseInt)
                 .collect(toList());
